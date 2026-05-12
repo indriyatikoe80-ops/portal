@@ -7,7 +7,8 @@ const authRoutes = require('./routes/auth');
 const settingsRoutes = require('./routes/settings');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+// WAJIB: Port harus 7860 untuk Hugging Face
+const PORT = process.env.PORT || 7860;
 
 app.use(cors());
 app.use(express.json());
@@ -19,10 +20,13 @@ app.use('/api/v1/settings', settingsRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
-  res.json({ message: 'Portal API is running! v1.0' });
+  res.json({
+    message: 'Portal API is running on Hugging Face!',
+    version: '1.0'
+  });
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Start Server - Gunakan 0.0.0.0 agar bisa diakses dari luar container
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on port ${PORT}`);
 });

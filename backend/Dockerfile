@@ -1,22 +1,19 @@
-# Gunakan node versi 18
 FROM node:18
 
-# Folder /app akan dimiliki oleh user 'node' (UID 1000)
+# Set folder kerja
 WORKDIR /app
 
-# Copy package.json dan install
-# Kita gunakan --chown=node:node agar izin aksesnya benar
+# Copy package.json dan install dependencies
 COPY --chown=node:node package*.json ./
 RUN npm install
 
-# Copy semua file kode dengan izin akses user node
+# Copy seluruh file backend (termasuk folder routes)
 COPY --chown=node:node . .
 
-# Pindah ke user 'node' sebelum menjalankan aplikasi
+# Gunakan user 'node' bawaan (UID 1000) agar diizinkan Hugging Face
 USER node
 
-# Ekspos port 7860
+# Expose port 7860
 EXPOSE 7860
 
-# Jalankan aplikasi
 CMD ["node", "index.js"]
