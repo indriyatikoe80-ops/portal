@@ -1,23 +1,22 @@
 # Gunakan node versi 18
 FROM node:18
 
-# Buat user baru 'user' dengan ID 1000 sesuai protokol Hugging Face
-RUN useradd -m -u 1000 user
-USER user
-ENV PATH="/home/user/.local/bin:$PATH"
-
-# Set direktori kerja
+# Folder /app akan dimiliki oleh user 'node' (UID 1000)
 WORKDIR /app
 
 # Copy package.json dan install
-COPY --chown=user package*.json ./
+# Kita gunakan --chown=node:node agar izin aksesnya benar
+COPY --chown=node:node package*.json ./
 RUN npm install
 
-# Copy semua file kode
-COPY --chown=user . .
+# Copy semua file kode dengan izin akses user node
+COPY --chown=node:node . .
+
+# Pindah ke user 'node' sebelum menjalankan aplikasi
+USER node
 
 # Ekspos port 7860
 EXPOSE 7860
 
 # Jalankan aplikasi
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
