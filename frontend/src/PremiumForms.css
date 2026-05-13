@@ -801,34 +801,36 @@ input:checked + .toggle-slider:before {
 }
 
 .about-image-card {
-  height: 420px;
+  min-height: 400px;
+  height: auto;
   position: relative;
   display: flex;
   align-items: flex-end;
-  padding: 40px;
-  overflow: hidden;
+  padding: 40px 30px;
+  overflow: visible; /* Allow content to flow if needed, but the glass effect covers it */
   border-radius: 24px;
 }
 
 .about-image-card .card-content {
   position: relative;
   z-index: 10;
-  max-width: 100%;
+  width: 100%;
 }
 
 .about-image-card h2 {
-  font-size: 32px;
+  font-size: clamp(24px, 4vw, 32px);
   color: #fff;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
+  line-height: 1.2;
 }
 
 .about-image-card p {
   color: var(--text-secondary);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.5;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  hyphens: auto;
+  max-width: 100%;
 }
 
 .floating-elements {
