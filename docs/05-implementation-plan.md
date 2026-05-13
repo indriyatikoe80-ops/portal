@@ -10,20 +10,26 @@ Dokumen ini berisi panduan teknis *step-by-step* untuk mengeksekusi pembangunan 
 2. **Setup Skema Database**:
    - Gunakan aplikasi klien seperti DBeaver atau HeidiSQL.
    - Sambungkan ke MySQL Aiven menggunakan kredensial di atas.
-   - Jalankan script SQL yang ada di `02-database.md`.
+   - Jalankan script SQL yang ada di `docs/init_database.sql` untuk membuat tabel dan mengisi data awal.
 
-## Fase 2: Pembangunan Backend Node.js (Hari 2)
+## Fase 2: Pembangunan Backend Node.js (Hari 2-3)
 1. **Inisialisasi Proyek Backend**:
    - Buat folder `backend`, jalankan `npm init -y`.
-   - Install dependensi: `express`, `cors`, `mysql2`, `dotenv`, `jsonwebtoken`, `bcrypt`.
+   - Install dependensi: `express`, `cors`, `mysql2`, `dotenv`, `jsonwebtoken`, `bcrypt`, `@huggingface/inference`.
 2. **Koneksi Database**:
    - Buat koneksi pool ke MySQL Aiven. Pastikan mengaktifkan setting SSL untuk Aiven.
-3. **Pembuatan Endpoint API**:
-   - Implementasikan endpoint sesuai rancangan di `04-api-spec.md`.
-4. **Deploy ke Render**:
-   - Buat Web Service baru di [Render](https://render.com/).
+3. **Setup Hugging Face**:
+   - Daftar ke [Hugging Face](https://huggingface.co/) dan buat API token.
+   - Simpan token di file `.env` sebagai `HUGGINGFACE_API_TOKEN`.
+   - Buat file `backend/config/huggingface.js` untuk inisialisasi client.
+   - Lihat `06-huggingface-integration.md` untuk detail lengkap.
+4. **Pembuatan Endpoint API**:
+   - Implementasikan endpoint sesuai rancangan di `04-api-spec.md` (termasuk AI endpoints).
+5. **Deploy ke Hugging Face Spaces**:
+   - Buat Space baru di [Hugging Face](https://huggingface.co/spaces).
    - Hubungkan dengan repository GitHub backend Anda.
-   - Setel Environment Variables (`DB_HOST`, `DB_USER`, `DB_PASS`, `JWT_SECRET`).
+   - Setel Environment Variables (`DB_HOST`, `DB_USER`, `DB_PASS`, `JWT_SECRET`, `HUGGINGFACE_API_TOKEN`) di settings Space.
+   - Backend otomatis deploy dan tersedia di URL HF Spaces.
 
 ## Fase 3: Pembangunan Frontend React UI (Hari 3-4)
 1. **Inisialisasi Frontend Utama**:
@@ -33,7 +39,7 @@ Dokumen ini berisi panduan teknis *step-by-step* untuk mengeksekusi pembangunan 
    - Buat komponen `HeroSection`, `ProductGrid`, `ProductCard`, `Footer`.
    - Gunakan CSS murni atau library animasi minimalis untuk efek hover glassmorphism.
 3. **Koneksi API**:
-   - Gunakan `fetch` atau `axios` di dalam `useEffect` React untuk mengambil daftar produk dari Render API (contoh: `https://api-portal-anda.onrender.com/api/v1/products`).
+   - Gunakan `fetch` atau `axios` di dalam `useEffect` React untuk mengambil daftar produk dari Hugging Face Spaces API (contoh: `https://username-portal-api.hf.space/api/v1/products`).
 4. **Membuat Dashboard Admin (Sederhana)**:
    - Buat route tersembunyi (contoh menggunakan React Router: `/login` dan `/admin`).
    - Buat form untuk menambah tautan produk baru.
@@ -44,12 +50,12 @@ Dokumen ini berisi panduan teknis *step-by-step* untuk mengeksekusi pembangunan 
 2. **Uji Kinerja & SEO**:
    - Pastikan tag `<title>` dan `<meta description>` sudah dimasukkan dalam `index.html`.
 3. **Deploy Frontend**:
-   - Deploy frontend ke layanan statis seperti **Netlify**, **Vercel**, atau **Render Static Site**.
+   - Deploy frontend ke layanan statis seperti **Netlify**, **Vercel**, atau **GitHub Pages**.
 
 ## Struktur Folder Akhir yang Direncanakan
 ```text
 portal/
  ├── docs/          (Dokumen perancangan ini)
- ├── backend/       (Express API, deploy ke Render)
+ ├── backend/       (Express API, deploy ke Hugging Face Spaces)
  └── frontend/      (React App, UI Utama Portal)
 ```

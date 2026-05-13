@@ -55,3 +55,23 @@ CREATE TABLE site_settings (
 -- ('site_title', 'Portofolio Candra - Web Edukasi & Utilitas')
 -- ('contact_email', 'admin@example.com')
 ```
+
+## Data Awal
+Gunakan `docs/init_database.sql` untuk membuat tabel dan mengisi data awal ke dalam Aiven MySQL. Contoh data seed ini memberikan akun admin, kategori, produk, dan konfigurasi situs.
+
+Contoh akun awal:
+- admin / Admin123!
+- editor / Editor123!
+
+Contoh isi `docs/init_database.sql`:
+```sql
+INSERT IGNORE INTO users (id, username, password_hash, created_at) VALUES
+('00000000-0000-0000-0000-000000000001', 'admin', '<bcrypt_hash_admin>', NOW());
+
+INSERT IGNORE INTO categories (name, slug) VALUES
+('Edukasi Anak', 'edukasi-anak'),
+('Utilitas Warga', 'utilitas-warga');
+
+INSERT IGNORE INTO products (id, title, description, url, image_url, category_id, is_active, display_order, created_at, updated_at) VALUES
+('10000000-0000-0000-0000-000000000001', 'Belajar Coding Interaktif', 'Platform learning yang membantu anak-anak belajar coding dengan permainan interaktif.', 'https://contoh.com/coding-anak', 'https://images.contoh.com/coding-anak.jpg', 1, TRUE, 1, NOW(), NOW());
+```

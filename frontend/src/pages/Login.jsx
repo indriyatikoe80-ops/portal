@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
-function Login() {
+export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [focusedInput, setFocusedInput] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
     try {
       const res = await fetch('http://localhost:5000/api/v1/auth/login', {
         method: 'POST',
@@ -20,37 +26,84 @@ function Login() {
         localStorage.setItem('portal_token', data.token);
         navigate('/admin');
       } else {
-        alert(data.error || 'Login gagal');
+        setError(data.error || 'Login gagal');
       }
     } catch (err) {
-      alert('Gagal terhubung ke server');
+      setError('Gagal terhubung ke server');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="portal-container" style={{ alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-      <div className="glass-card" style={{ width: '100%', maxWidth: '400px' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px', color: 'var(--primary-glow)' }}>Admin Login</h2>
-        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-          <input 
-            type="text" 
-            placeholder="Username" 
-            value={username} 
-            onChange={e => setUsername(e.target.value)}
-            style={{ padding: '10px', borderRadius: '5px', border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.1)', color: 'white' }}
-          />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            value={password} 
-            onChange={e => setPassword(e.target.value)}
-            style={{ padding: '10px', borderRadius: '5px', border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.1)', color: 'white' }}
-          />
-          <button type="submit" className="btn-primary">Login</button>
+    <div className="login-page">
+      <div className="login-background">
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
+        <div className="orb orb-3"></div>
+      </div>
+      
+      <div className="login-container glass-card premium-glass">
+        <div className="login-header">
+          <div className="logo-icon">🔒</div>
+          <h1>Admin Portal</h1>
+          <p>Secure access to your content hub</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="premium-form">
+          <div className={`form-group floating-group ${focusedInput === 'username' || username ? 'active' : ''}`}>
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              onFocus={() => setFocusedInput('username')}
+              onBlur={() => setFocusedInput(null)}
+              required
+            />
+            <label htmlFor="username">Username</label>
+            <div className="input-glow"></div>
+          </div>
+          
+          <div className={`form-group floating-group ${focusedInput === 'password' || password ? 'active' : ''}`}>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onFocus={() => setFocusedInput('password')}
+              onBlur={() => setFocusedInput(null)}
+              required
+            />
+            <label htmlFor="password">Password</label>
+            <div className="input-glow"></div>
+          </div>
+
+          {error && (
+            <div className="error-message animated-error">
+              <span className="error-icon">⚠️</span> {error}
+            </div>
+          )}
+
+          <button type="submit" className="btn-primary premium-btn" disabled={loading}>
+            <span className="btn-content">
+              {loading ? (
+                <>
+                  <span className="spinner"></span>
+                  Authenticating...
+                </>
+              ) : (
+                'Sign In'
+              )}
+            </span>
+            <span className="btn-glow"></span>
+          </button>
+          
+          <button type="button" className="btn-text back-link" onClick={() => navigate('/')}>
+            &larr; Back to Portal
+          </button>
         </form>
       </div>
     </div>
   );
 }
-
-export default Login;

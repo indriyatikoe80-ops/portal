@@ -24,7 +24,7 @@ Menjadi pusat ekosistem digital terdepan yang menghasilkan produk-produk teknolo
 ## 3. Tech Stack (Sesuai Rencana)
 - **Frontend Utama**: React.js (menggunakan Vite untuk performa build yang super cepat).
 - **Styling**: Vanilla CSS dengan variabel khusus (atau Framer Motion untuk animasi premium tingkat lanjut jika disetujui).
-- **Backend / API**: Node.js dengan Express.js. Dihosting di **Render**.
+- **Backend / API**: Node.js dengan Express.js. Dihosting di **Hugging Face Spaces**.
 - **Database**: MySQL. Dihosting di **Aiven**.
 - **Penyimpanan Gambar / Hosting Frontend**: GitHub Pages sangat direkomendasikan untuk hosting statis Frontend (React) secara gratis. Karena jumlah gambar tidak banyak, file gambar dapat disimpan langsung di dalam repositori GitHub (di folder `public/images`), sehingga tidak memerlukan layanan pihak ketiga seperti Cloudinary.
 
