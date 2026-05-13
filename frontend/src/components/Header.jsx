@@ -12,7 +12,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
@@ -30,7 +29,6 @@ export default function Header() {
             <a href="#products">Produk</a>
             <a href="#about">Tentang</a>
             <a href="#contact">Kontak</a>
-            <Link to="/login" className="btn-small">Admin</Link>
           </nav>
           
           <button 

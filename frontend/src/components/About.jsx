@@ -1,6 +1,9 @@
 import React from 'react';
+import { useSiteSettings } from '../hooks/useSiteSettings';
 
 export default function About() {
+  const { settings } = useSiteSettings();
+
   return (
     <section id="about" className="about-section fade-in">
       <div className="container">
@@ -13,13 +16,13 @@ export default function About() {
             </div>
             <div className="card-content">
               <h2>Masa Depan Digital</h2>
-              <p>Membangun solusi yang menginspirasi dan memberdayakan setiap individu.</p>
+              <p>{settings.profile_text}</p>
             </div>
           </div>
           
           <div className="about-content">
             <div className="section-badge">Tentang Kami</div>
-            <h2 className="section-title text-left">Visi & Misi Kami</h2>
+            <h2 className="section-title text-left">Visi &amp; Misi Kami</h2>
             <p className="about-description">
               Kami berdedikasi untuk menciptakan ekosistem digital yang inklusif, edukatif, dan solutif. Melalui inovasi teknologi, kami menjawab tantangan sehari-hari dengan cara yang estetik dan efisien.
             </p>
@@ -27,11 +30,11 @@ export default function About() {
             <div className="visi-misi-cards">
               <div className="mini-card premium-glass">
                 <h3>Visi</h3>
-                <p>Menjadi pusat ekosistem digital terdepan yang menghasilkan produk inklusif dan profesional.</p>
+                <p>{settings.visi_text}</p>
               </div>
               <div className="mini-card premium-glass">
                 <h3>Misi</h3>
-                <p>Mengembangkan aplikasi tepat guna, memberikan pengalaman premium, dan terus berinovasi.</p>
+                <p>{settings.misi_text}</p>
               </div>
             </div>
           </div>
