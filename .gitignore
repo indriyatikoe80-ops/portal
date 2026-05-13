@@ -1,5 +1,8 @@
 # Abaikan folder backend secara keseluruhan untuk GitHub
 backend/
+docs/
+progress/
+
 
 # Dependencies
 node_modules/
